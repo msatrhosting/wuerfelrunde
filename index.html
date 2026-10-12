@@ -408,6 +408,12 @@ let state = load() || {
 if(!state.theme) state.theme = 1;
 if(state.hideSums === undefined) state.hideSums = true;
 if(state.multiKniffel === undefined) state.multiKniffel = false;
+/* beim Aufruf immer zuerst der Home-Screen; ein beendetes Spiel wird zurückgesetzt */
+state.setupDone = false;
+state.currentIndex = 0;
+if(state.players.length && isGameComplete()){
+  state.players.forEach(p=>{ p.scores = {}; p.extraKniffelCount = 0; p.shuffleUsed = false; });
+}
 
 function setTheme(id){
   state.theme = id;
